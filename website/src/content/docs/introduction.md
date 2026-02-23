@@ -1,6 +1,8 @@
 ---
 title: Introduction
 description: Why OpenHook exists and what it solves.
+sidebar:
+  order: 1
 ---
 
 ## The Problem

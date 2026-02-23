@@ -1,0 +1,28 @@
+---
+title: OpenHook
+description: A lightweight protocol that standardizes hook payloads for AI coding agent tools.
+template: splash
+hero:
+  tagline: One JSON envelope. Every AI coding tool.
+  actions:
+    - text: Read the Spec
+      link: /open-hook/introduction/
+      icon: right-arrow
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid>
+  <Card title="Simple" icon="pencil">
+    Only `session.end` is required. Tools implement what they can.
+  </Card>
+  <Card title="Self-Describing" icon="approve-check">
+    The `openhook` field eliminates heuristic payload detection.
+  </Card>
+  <Card title="Extensible" icon="puzzle">
+    Vendor-specific data via `extensions` without breaking the spec.
+  </Card>
+  <Card title="SDK Ready" icon="laptop">
+    Reference SDKs for Python and TypeScript.
+  </Card>
+</CardGrid>

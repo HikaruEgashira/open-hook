@@ -1,9 +1,9 @@
 ---
 title: Specification v0.1
 description: The full OpenHook protocol specification.
+sidebar:
+  order: 2
 ---
-
-import { Code } from '@astrojs/starlight/components';
 
 ## Envelope Format
 
