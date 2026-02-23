@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openhook.dev/schemas/tool-start.schema.json",
+  "title": "tool.start data",
+  "description": "Data schema for tool.start events.",
+  "type": "object",
+  "properties": {
+    "tool_name": {
+      "type": "string",
+      "description": "Name of the tool being invoked."
+    },
+    "tool_call_id": {
+      "type": "string",
+      "description": "Unique identifier for this tool invocation."
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openhook.dev/schemas/tool-end.schema.json",
+  "title": "tool.end data",
+  "description": "Data schema for tool.end events.",
+  "type": "object",
+  "properties": {
+    "tool_name": {
+      "type": "string",
+      "description": "Name of the tool."
+    },
+    "tool_call_id": {
+      "type": "string",
+      "description": "Same identifier from the corresponding tool.start."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["success", "error"],
+      "description": "Outcome of the tool invocation."
+    },
+    "duration_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Tool execution duration in milliseconds."
+    }
+  },
+  "additionalProperties": true
+}

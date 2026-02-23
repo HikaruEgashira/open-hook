@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openhook.dev/schemas/session-end.schema.json",
+  "title": "session.end data",
+  "description": "Data schema for session.end events.",
+  "type": "object",
+  "properties": {
+    "transcript_path": {
+      "type": "string",
+      "description": "Absolute path to the session transcript file."
+    },
+    "reason": {
+      "type": "string",
+      "enum": ["user_exit", "timeout", "error", "completed"],
+      "description": "Why the session ended."
+    },
+    "model": {
+      "type": "string",
+      "description": "Model identifier."
+    },
+    "duration_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Session duration in milliseconds."
+    },
+    "input_tokens": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total input tokens consumed."
+    },
+    "output_tokens": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total output tokens consumed."
+    }
+  },
+  "additionalProperties": true
+}

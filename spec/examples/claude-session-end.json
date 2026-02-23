@@ -1,0 +1,17 @@
+{
+  "openhook": "0.1",
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "source": "claude-code",
+  "type": "session.end",
+  "time": "2026-02-23T10:15:30.123Z",
+  "session_id": "sess_abc123def456",
+  "data": {
+    "transcript_path": "/home/user/.claude/projects/my-project/sessions/sess_abc123def456.jsonl",
+    "reason": "user_exit",
+    "model": "claude-sonnet-4-20250514",
+    "duration_ms": 120000,
+    "input_tokens": 50000,
+    "output_tokens": 12000
+  },
+  "cwd": "/home/user/my-project"
+}

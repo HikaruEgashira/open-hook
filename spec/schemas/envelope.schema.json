@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openhook.dev/schemas/envelope.schema.json",
+  "title": "OpenHook Envelope",
+  "description": "The standard envelope format for OpenHook events.",
+  "type": "object",
+  "required": ["openhook", "id", "source", "type", "time", "session_id"],
+  "properties": {
+    "openhook": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$",
+      "description": "Protocol version in MAJOR.MINOR format."
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique event identifier."
+    },
+    "source": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Tool identifier in lowercase kebab-case."
+    },
+    "type": {
+      "type": "string",
+      "enum": ["session.start", "session.end", "prompt.submit", "tool.start", "tool.end"],
+      "description": "Event type."
+    },
+    "time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp with timezone."
+    },
+    "session_id": {
+      "type": "string",
+      "description": "Session identifier."
+    },
+    "data": {
+      "type": "object",
+      "description": "Event-type-specific payload."
+    },
+    "cwd": {
+      "type": "string",
+      "description": "Working directory at time of event."
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Vendor-specific data.",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

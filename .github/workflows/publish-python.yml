@@ -1,0 +1,25 @@
+name: Publish Python SDK
+
+on:
+  push:
+    tags: ["python-v*"]
+
+permissions:
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/python
+    environment:
+      name: pypi
+      url: https://pypi.org/p/openhook
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv build
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: packages/python/dist/

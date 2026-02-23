@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openhook.dev/schemas/prompt-submit.schema.json",
+  "title": "prompt.submit data",
+  "description": "Data schema for prompt.submit events.",
+  "type": "object",
+  "properties": {
+    "prompt_length": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Character length of the prompt."
+    }
+  },
+  "additionalProperties": true
+}
