@@ -41,8 +41,7 @@
     },
     "context": {
       "type": "string",
-      "format": "uri-reference",
-      "description": "Agent context URI at time of event. Identifies the environment where the agent is operating. Examples: 'file:///home/user/project' (filesystem), 'https://app.notion.so/page-id' (document), 'mailto:inbox/folder-id' (email)."
+      "description": "Agent context URI at time of event. Identifies the environment where the agent is operating. SHOULD be a URI. Examples: 'file:///home/user/project' (filesystem), 'https://app.notion.so/page-id' (document), 'mailto:inbox/folder-id' (email)."
     },
     "extensions": {
       "type": "object",
