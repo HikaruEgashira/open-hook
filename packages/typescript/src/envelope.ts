@@ -22,7 +22,7 @@ export interface OpenHookEventInit {
   type: EventTypeValue;
   sessionId: string;
   data?: Record<string, unknown>;
-  cwd?: string;
+  context?: string;
   extensions?: Record<string, unknown>;
   id?: string;
   time?: string;
@@ -36,7 +36,7 @@ export class OpenHookEvent {
   readonly time: string;
   readonly sessionId: string;
   readonly data: Record<string, unknown>;
-  readonly cwd: string | undefined;
+  readonly context: string | undefined;
   readonly extensions: Record<string, unknown>;
 
   constructor(init: OpenHookEventInit) {
@@ -47,7 +47,7 @@ export class OpenHookEvent {
     this.time = init.time ?? new Date().toISOString();
     this.sessionId = init.sessionId;
     this.data = init.data ?? {};
-    this.cwd = init.cwd;
+    this.context = init.context;
     this.extensions = init.extensions ?? {};
   }
 
@@ -76,7 +76,7 @@ export class OpenHookEvent {
       type: d["type"] as EventTypeValue,
       sessionId: d["session_id"] as string,
       data: (d["data"] as Record<string, unknown>) ?? {},
-      cwd: d["cwd"] as string | undefined,
+      context: d["context"] as string | undefined,
       extensions: (d["extensions"] as Record<string, unknown>) ?? {},
       id: d["id"] as string,
       time: d["time"] as string,
@@ -97,7 +97,7 @@ export class OpenHookEvent {
       session_id: this.sessionId,
     };
     if (Object.keys(this.data).length > 0) obj["data"] = this.data;
-    if (this.cwd) obj["cwd"] = this.cwd;
+    if (this.context) obj["context"] = this.context;
     if (Object.keys(this.extensions).length > 0)
       obj["extensions"] = this.extensions;
     return obj;

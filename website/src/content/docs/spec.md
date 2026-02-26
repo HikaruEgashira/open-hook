@@ -18,9 +18,11 @@ All required fields:
 | `time` | `string` | ISO 8601 timestamp with timezone |
 | `session_id` | `string` | Session identifier |
 
-Optional fields: `data` (object), `cwd` (string), `extensions` (object).
+Optional fields: `data` (object), `context` (URI string), `extensions` (object).
 
-## Event Types
+`context` identifies the agent's operating environment as a URI: `file:///home/user/project` for filesystem, `https://app.notion.so/page-id` for documents.
+
+## Lifecycle Events
 
 | Type | Conformance | Description |
 |---|---|---|
@@ -29,6 +31,16 @@ Optional fields: `data` (object), `cwd` (string), `extensions` (object).
 | `prompt.submit` | OPTIONAL | User submits prompt |
 | `tool.start` | OPTIONAL | Tool execution begins |
 | `tool.end` | OPTIONAL | Tool execution ends |
+
+## Artifact Events
+
+Artifact events track mutations to content produced by the agent. Designed to expand as agents operate beyond filesystems.
+
+| Type | Conformance | Description |
+|---|---|---|
+| `file.write` | OPTIONAL | Agent creates, updates, or deletes a file |
+
+Future members: `doc.write`, `message.send`, `record.update`.
 
 ## Data Schemas
 
@@ -44,7 +56,11 @@ Optional fields: `data` (object), `cwd` (string), `extensions` (object).
 
 `tool_name`, `tool_call_id`, `status` (`success` | `error`), `duration_ms`
 
-All `data` fields are OPTIONAL.
+### file.write
+
+`path` (REQUIRED), `operation` (`create` | `update` | `delete`), `start_line`, `end_line`, `model`, `tool_call_id`
+
+All `data` fields are OPTIONAL unless marked REQUIRED.
 
 ## Hook Discovery
 

@@ -11,5 +11,5 @@
     "status": "success",
     "duration_ms": 3200
   },
-  "cwd": "/home/user/my-project"
+  "context": "file:///home/user/my-project"
 }

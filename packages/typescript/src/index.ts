@@ -7,3 +7,10 @@ export {
   parseStdin,
 } from "./envelope.js";
 export { fromLegacy, isOpenhook } from "./compat.js";
+export {
+  toTraceRecord,
+  type AgentTraceRecord,
+  type AgentTraceContributor,
+  type AgentTraceConversation,
+  type AgentTraceFile,
+} from "./integrations/agentTrace.js";

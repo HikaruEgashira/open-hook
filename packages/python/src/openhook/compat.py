@@ -26,6 +26,13 @@ _SESSION_ID_KEYS = ("sessionId", "session_id", "conversation_id", "taskId", "thr
 _TRANSCRIPT_KEYS = ("transcriptPath", "transcript_path")
 
 
+def _cwd_to_context(cwd: str) -> str:
+    """Convert a legacy filesystem path to a file:// URI."""
+    if "://" in cwd:
+        return cwd
+    return f"file://{cwd}"
+
+
 def _detect_source(payload: dict[str, Any]) -> str:
     if payload.get("source_tool"):
         return str(payload["source_tool"])
@@ -37,6 +44,10 @@ def _detect_source(payload: dict[str, Any]) -> str:
         return "codex"
     if "hook_event_name" in payload:
         return "copilot"
+    # Claude Code uses camelCase fields (sessionId, transcriptPath)
+    # while other tools use snake_case (session_id)
+    if "sessionId" in payload or "transcriptPath" in payload:
+        return "claude-code"
     return "unknown"
 
 
@@ -78,6 +89,9 @@ def from_legacy(payload: dict[str, Any]) -> OpenHookEvent:
         if "tool_name" in payload:
             data["tool_name"] = payload["tool_name"]
 
+    raw_cwd = payload.get("cwd")
+    context = _cwd_to_context(raw_cwd) if raw_cwd else None
+
     return OpenHookEvent(
         openhook="0.1",
         id=str(uuid.uuid4()),
@@ -86,7 +100,7 @@ def from_legacy(payload: dict[str, Any]) -> OpenHookEvent:
         time=now,
         session_id=session_id,
         data=data,
-        cwd=payload.get("cwd"),
+        context=context,
         extensions={"legacy_payload": payload},
     )
 

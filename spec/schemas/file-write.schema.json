@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openhook.dev/schemas/file-write.schema.json",
+  "title": "file.write data",
+  "description": "Data schema for file.write events. The first member of the artifact.* event family. Emitted when an AI tool creates, updates, or deletes a file. Designed for code attribution consumers such as Agent Trace (https://agent-trace.dev/). Future artifact.* members (doc.write, message.send, record.update) will follow the same pattern with artifact-appropriate fields.",
+  "type": "object",
+  "required": ["path"],
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "Absolute or repo-relative path to the file."
+    },
+    "operation": {
+      "type": "string",
+      "enum": ["create", "update", "delete"],
+      "description": "Type of file modification."
+    },
+    "start_line": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "First line of the written range (1-indexed)."
+    },
+    "end_line": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Last line of the written range (1-indexed, inclusive)."
+    },
+    "model": {
+      "type": "string",
+      "description": "Model that produced the content. Follows models.dev convention: provider/model-name (e.g., 'anthropic/claude-sonnet-4-6')."
+    },
+    "tool_call_id": {
+      "type": "string",
+      "description": "Links this event to the corresponding tool.start / tool.end pair."
+    }
+  },
+  "additionalProperties": true
+}

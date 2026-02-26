@@ -1,0 +1,17 @@
+{
+  "openhook": "0.1",
+  "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "source": "claude-code",
+  "type": "file.write",
+  "time": "2026-02-23T10:15:45.678Z",
+  "session_id": "sess_abc123def456",
+  "data": {
+    "path": "src/utils.ts",
+    "operation": "create",
+    "start_line": 1,
+    "end_line": 30,
+    "model": "anthropic/claude-sonnet-4-6",
+    "tool_call_id": "call_xyz789"
+  },
+  "context": "file:///home/user/my-project"
+}

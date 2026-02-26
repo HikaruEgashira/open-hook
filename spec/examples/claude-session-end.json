@@ -13,5 +13,5 @@
     "input_tokens": 50000,
     "output_tokens": 12000
   },
-  "cwd": "/home/user/my-project"
+  "context": "file:///home/user/my-project"
 }

@@ -9,6 +9,7 @@ class EventType(StrEnum):
     PROMPT_SUBMIT = "prompt.submit"
     TOOL_START = "tool.start"
     TOOL_END = "tool.end"
+    FILE_WRITE = "file.write"
 
 
 ALL_EVENT_TYPES = frozenset(EventType)

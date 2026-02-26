@@ -23,7 +23,7 @@
     },
     "type": {
       "type": "string",
-      "enum": ["session.start", "session.end", "prompt.submit", "tool.start", "tool.end"],
+      "enum": ["session.start", "session.end", "prompt.submit", "tool.start", "tool.end", "file.write"],
       "description": "Event type."
     },
     "time": {
@@ -39,9 +39,10 @@
       "type": "object",
       "description": "Event-type-specific payload."
     },
-    "cwd": {
+    "context": {
       "type": "string",
-      "description": "Working directory at time of event."
+      "format": "uri-reference",
+      "description": "Agent context URI at time of event. Identifies the environment where the agent is operating. Examples: 'file:///home/user/project' (filesystem), 'https://app.notion.so/page-id' (document), 'mailto:inbox/folder-id' (email)."
     },
     "extensions": {
       "type": "object",

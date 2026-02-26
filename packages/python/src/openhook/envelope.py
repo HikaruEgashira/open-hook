@@ -28,7 +28,7 @@ class OpenHookEvent:
     time: str
     session_id: str
     data: dict[str, Any] = field(default_factory=dict)
-    cwd: str | None = None
+    context: str | None = None
     extensions: dict[str, Any] = field(default_factory=dict)
 
     # --- Convenience accessors ---
@@ -64,7 +64,7 @@ class OpenHookEvent:
             time=d["time"],
             session_id=d["session_id"],
             data=d.get("data", {}),
-            cwd=d.get("cwd"),
+            context=d.get("context"),
             extensions=d.get("extensions", {}),
         )
 
@@ -80,7 +80,7 @@ class OpenHookEvent:
         type: EventType,
         session_id: str,
         data: dict[str, Any] | None = None,
-        cwd: str | None = None,
+        context: str | None = None,
         extensions: dict[str, Any] | None = None,
         event_id: str | None = None,
         time: str | None = None,
@@ -93,7 +93,7 @@ class OpenHookEvent:
             time=time or datetime.now(timezone.utc).isoformat(),
             session_id=session_id,
             data=data or {},
-            cwd=cwd,
+            context=context,
             extensions=extensions or {},
         )
 
@@ -110,8 +110,8 @@ class OpenHookEvent:
         }
         if self.data:
             d["data"] = self.data
-        if self.cwd:
-            d["cwd"] = self.cwd
+        if self.context:
+            d["context"] = self.context
         if self.extensions:
             d["extensions"] = self.extensions
         return d

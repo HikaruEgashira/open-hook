@@ -21,12 +21,19 @@ const SESSION_ID_KEYS = [
 
 const TRANSCRIPT_KEYS = ["transcriptPath", "transcript_path"];
 
+function cwdToContext(cwd: string): string {
+  return cwd.includes("://") ? cwd : `file://${cwd}`;
+}
+
 function detectSource(payload: Record<string, unknown>): string {
   if (payload["source_tool"]) return String(payload["source_tool"]);
   if ("conversation_id" in payload) return "cursor";
   if ("taskId" in payload) return "cline";
   if ("thread-id" in payload) return "codex";
   if ("hook_event_name" in payload) return "copilot";
+  // Claude Code uses camelCase fields (sessionId, transcriptPath)
+  // while other tools use snake_case (session_id)
+  if ("sessionId" in payload || "transcriptPath" in payload) return "claude-code";
   return "unknown";
 }
 
@@ -67,12 +74,15 @@ export function fromLegacy(payload: Record<string, unknown>): OpenHookEvent {
     if (payload["tool_name"]) data["tool_name"] = payload["tool_name"];
   }
 
+  const rawCwd = payload["cwd"] as string | undefined;
+  const context = rawCwd ? cwdToContext(rawCwd) : undefined;
+
   return new OpenHookEvent({
     source,
     type: eventType,
     sessionId,
     data,
-    cwd: payload["cwd"] as string | undefined,
+    context,
     extensions: { legacy_payload: payload },
     id: randomUUID(),
     time: new Date().toISOString(),

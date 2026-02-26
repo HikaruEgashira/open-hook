@@ -4,6 +4,7 @@ export const EventType = {
   PromptSubmit: "prompt.submit",
   ToolStart: "tool.start",
   ToolEnd: "tool.end",
+  FileWrite: "file.write",
 } as const;
 
 export type EventTypeValue = (typeof EventType)[keyof typeof EventType];

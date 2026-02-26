@@ -48,7 +48,7 @@ An OpenHook event is a single JSON object written to the hook process's stdin.
 | Field | Type | Default | Description |
 |---|---|---|---|
 | `data` | `object` | `{}` | Event-type-specific payload. Schema varies by `type`. |
-| `cwd` | `string` | — | Working directory at time of event. |
+| `context` | `string` | — | Agent context URI at time of event. Identifies the environment where the agent is operating. SHOULD be a URI (e.g., `file:///home/user/project`, `https://app.notion.so/page-id`). |
 | `extensions` | `object` | `{}` | Vendor-specific data. Consumers MUST ignore unknown keys. |
 
 ### 2.3 Example
@@ -64,7 +64,7 @@ An OpenHook event is a single JSON object written to the hook process's stdin.
   "data": {
     "transcript_path": "/home/user/.claude/sessions/sess_abc123.jsonl"
   },
-  "cwd": "/home/user/my-project"
+  "context": "file:///home/user/my-project"
 }
 ```
 
@@ -74,15 +74,27 @@ An OpenHook event is a single JSON object written to the hook process's stdin.
 
 | Type | Conformance | Description |
 |---|---|---|
-| `session.start` | OPTIONAL | A new coding session begins. |
-| `session.end` | REQUIRED | A coding session ends. All conforming tools MUST emit this event. |
+| `session.start` | OPTIONAL | A new agent session begins. |
+| `session.end` | REQUIRED | An agent session ends. All conforming tools MUST emit this event. |
 | `prompt.submit` | OPTIONAL | The user submits a prompt to the agent. |
-| `tool.start` | OPTIONAL | The agent begins executing a tool (e.g., Bash, file read). |
+| `tool.start` | OPTIONAL | The agent begins executing a tool. |
 | `tool.end` | OPTIONAL | The agent finishes executing a tool. |
 
 Tools that support only `session.end` are fully conforming. The remaining events provide richer observability for tools that support them.
 
-### 3.2 Data Schemas by Event Type
+### 3.2 Artifact Events
+
+Artifact events track mutations to content produced by the agent. They are designed for attribution consumers such as [Agent Trace](https://agent-trace.dev/) and are emitted once per artifact mutation, independent of the surrounding `tool.start` / `tool.end` pair.
+
+The `artifact.*` family is designed to expand as agents operate beyond filesystems:
+
+| Type | Conformance | Artifact | Description |
+|---|---|---|---|
+| `file.write` | OPTIONAL | Local file | The agent creates, updates, or deletes a file. |
+
+> **Future members** (not yet specified): `doc.write` (Notion, Google Docs), `message.send` (email, Slack), `record.update` (database rows, calendar events). New members will be added as MINOR version increments.
+
+### 3.3 Data Schemas by Event Type
 
 #### `session.start`
 
@@ -123,7 +135,18 @@ Tools that support only `session.end` are fully conforming. The remaining events
 | `status` | `string` | Outcome. One of: `"success"`, `"error"`. |
 | `duration_ms` | `integer` | Tool execution duration in milliseconds. |
 
-All `data` fields are OPTIONAL. Tools provide what they can.
+#### `file.write`
+
+| Field | Type | Description |
+|---|---|---|
+| `path` | `string` | **REQUIRED.** Absolute or repo-relative path to the file. |
+| `operation` | `string` | One of: `"create"`, `"update"`, `"delete"`. |
+| `start_line` | `integer` | First line of the written range (1-indexed). |
+| `end_line` | `integer` | Last line of the written range (1-indexed, inclusive). |
+| `model` | `string` | Model that produced the content. Follows [models.dev](https://models.dev) convention: `provider/model-name`. |
+| `tool_call_id` | `string` | Links to the surrounding `tool.start` / `tool.end` pair. |
+
+All `data` fields are OPTIONAL unless marked REQUIRED. Tools provide what they can.
 
 ## 4. Hook Discovery (Recommended)
 
