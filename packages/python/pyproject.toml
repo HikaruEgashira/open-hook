@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "openhook"
 version = "0.1.0"
 description = "OpenHook Protocol SDK — standardized hook payloads for AI coding agents"
-readme = "../../README.md"
+readme = "README.md"
 license = "Apache-2.0"
 requires-python = ">=3.10"
 authors = [{ name = "OpenHook Contributors" }]
