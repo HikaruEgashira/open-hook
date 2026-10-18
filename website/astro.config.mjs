@@ -9,14 +9,21 @@ export default defineConfig({
       title: "OpenHook",
       description:
         "A lightweight protocol that standardizes hook payloads for AI coding agent tools.",
-      social: {
-        github: "https://github.com/HikaruEgashira/open-hook",
-      },
+      social: [
+        {
+          icon: "github",
+          label: "GitHub",
+          href: "https://github.com/HikaruEgashira/open-hook",
+        },
+      ],
       sidebar: [
-        { label: "Introduction", autogenerate: { directory: "." } },
+        {
+          label: "Introduction",
+          items: [{ autogenerate: { directory: "." } }],
+        },
         {
           label: "SDKs",
-          autogenerate: { directory: "sdks" },
+          items: [{ autogenerate: { directory: "sdks" } }],
         },
       ],
     }),
