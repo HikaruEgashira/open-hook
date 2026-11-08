@@ -8,7 +8,7 @@ on:
 
 jobs:
   python:
-    runs-on: hikae-2vcpu-ubuntu-2404-arm
+    runs-on: hikae-2vcpu-ubuntu-2404
     defaults:
       run:
         working-directory: packages/python
@@ -18,7 +18,7 @@ jobs:
       - run: uv run pytest tests/ -v
 
   typescript:
-    runs-on: hikae-2vcpu-ubuntu-2404-arm
+    runs-on: hikae-2vcpu-ubuntu-2404
     defaults:
       run:
         working-directory: packages/typescript
@@ -32,7 +32,7 @@ jobs:
       - run: npm test
 
   schema-validate:
-    runs-on: hikae-2vcpu-ubuntu-2404-arm
+    runs-on: hikae-2vcpu-ubuntu-2404
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
